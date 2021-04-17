@@ -1,0 +1,19 @@
+#Div2 {
+  display: none;
+}
+
+.mystyle {
+  width: 300px;
+  height: 100px;
+  color: black;
+}
+
+.question {
+  color: black;
+  list-style-type: none;
+  text-align: center;
+  display: flex;
+}
+
+.inside1 {
+}

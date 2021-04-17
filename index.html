@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="Div1">
+      <h1>Coding Quiz Challenge</h1>
+      <p>
+        Try to answer the following code-related questions within the time
+        limit. Keep in mind that incorrect answers will penalize your score/time
+        by ten seconds!
+      </p>
+      <input
+        id="Button1"
+        type="button"
+        value="Click"
+        onclick="switchVisible();"
+      />
+    </div>
+    <div class="Div2"></div>
+    <!--<button id="hide">hide</button>
+    <div class="d1 hide">
+      <h1>show this</h1>
+    </div>
+    <div class="d2">
+      <h1>do not show this</h1>
+    </div>
+    <div class="d3 hide">
+      <h1>do not show this</h1>
+    </div>-->
+    <script>
+      if (document.getElementsByClassName("Div1")) {
+        if (document.getElementsByClassName("Div1").style.display == "none") {
+          document.getElementsByClassName("Div1").style.display = "block";
+          document.getElementsByClassName("Div2").style.display = "none";
+        } else {
+          document.getElementsByClassName("Div1").style.display = "none";
+          document.getElementsByClassName("Div2").style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>
