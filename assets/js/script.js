@@ -92,7 +92,7 @@ function timer() {
   if (timeleft <= 0) {
     clearInterval(timerId);
      userNameScore();
-    console.log("Inside TIMER");
+    
   }
 }
 
@@ -114,7 +114,7 @@ function highScores() {
   var buttonsHighScores = document.createElement("div");
 
   for (var y = 0; y < localStorage.length; y++) {
-    console.log(y);
+    
     listHighScores.innerHTML +=
       "<p>" +
       (y + 1) +
@@ -165,7 +165,7 @@ function userNameScore() {
 
 //Display Questions 
 function displayList() {
-  console.log("here");
+  
   document.getElementById("Div2").style.display = "block";
   document.getElementById("Div2").className = "mystyle";
   var listItemEl = document.createElement("li");
@@ -175,7 +175,7 @@ function displayList() {
   var inside1 = document.createElement("div");
   inside1.className = "inside1";
   
-  console.log("This is last i " + i);
+  
   inside1.innerHTML =
     "<h1 >" +
     taskDataObj[i].question +
@@ -205,20 +205,19 @@ function displayList() {
 
 //Start Quiz Event Listener 
 div2.addEventListener("click", function (e) {
-  console.log("I IS: " + i);
+  
   
   if (
     (e.target && e.target.nodeName == "LI") ||
     (e.target && e.target.nodeName == "BUTTON" && i < taskDataObj.length)
   ) {
-    console.log(e.target.id + " was clicked");
+    
     var userSelected = e.target.id;
-    console.log("user selected " + userSelected);
-    console.log("array answer " + taskDataObj[i].answer);
+    
     
     if (userSelected === taskDataObj[i].answer) {
       ++answerCount;
-      console.log("score: " + answerCount);
+      
       result = "Correct!";
     } else {
       result = "Incorrect!";
@@ -227,7 +226,7 @@ div2.addEventListener("click", function (e) {
 
     if (i < taskDataObj.length - 1) {
       i++;
-      console.log("This is i " + i);
+    
       div2.innerHTML = "";
       displayList();
     } else {

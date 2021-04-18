@@ -22,10 +22,6 @@
   margin-left: 718px;
 }
 
-#countdown p {
-  /* margin-left: 1000px;*/
-}
-
 #highScores {
   margin-left: 1400px;
 }
@@ -36,8 +32,6 @@
 }
 
 .mystyle {
-  /*width: 300px;
-  height: 100px;*/
   color: black;
 }
 
@@ -47,9 +41,6 @@
   text-align: center;
   display: flex;
   justify-content: center;
-}
-
-.inside1 {
 }
 
 .userNameScore {
