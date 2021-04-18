@@ -9,22 +9,28 @@
   </head>
   <body>
     <div id="Div1">
+      <h1>
+        <button onclick=" div1.style.display = 'none'; highScores();">
+          View High Scores
+        </button>
+      </h1>
       <h1>Coding Quiz Challenge</h1>
       <p>
-        Try to answer the following code-related questions within the time
-        limit. Keep in mind that incorrect answers will penalize your score/time
-        by ten seconds!
+        PLEASE WAIT FOR TIMER TO START THE GAME THEN START ANSWERING. Try to
+        answer the following code-related questions within the time limit. Keep
+        in mind that Incorrect! answers will penalize your score/time by ten
+        seconds!
       </p>
+      <input
+        id="Button1"
+        type="button"
+        value="Start"
+        onclick="switchVisible();"
+      />
     </div>
 
-    <input
-      id="Button1"
-      type="button"
-      value="Start"
-      onclick="switchVisible();"
-    />
-
     <div id="Div2">
+      <div id="countdown"></div>
       <ul id="ulDiv2"></ul>
 
       <!--<h1>Commonly used data types DO Not Include:</h1>
@@ -43,11 +49,13 @@
 
     <div id="Div3"></div>
 
+    <div id="Div4"></div>
+
     <!--  <div id="Div3">
       <h1>All Done!</h1>
       <h2>Your final score is:</h2>
       <h2>Enter initials</h2>
-      <button onclick="setScore">Submit</button>
+      <button onclick="userNameScore">Submit</button>
     </div>
 -->
     <script>
@@ -100,9 +108,13 @@
           answer: "4",
         },
       ];
-
+      var div1 = document.querySelector("#Div1");
       var div2 = document.querySelector("#ulDiv2");
       var div3 = document.querySelector("#Div3");
+      var div4 = document.querySelector("#Div4");
+      var timeleft = 75;
+      var timerId;
+
       // var butt = document.querySelector("div2.inside1");
 
       /* var taskDataObj = {
@@ -120,16 +132,99 @@
           if (document.getElementById("Div1").style.display == "none") {
             document.getElementById("Div1").style.display = "block";
             document.getElementById("Div2").style.display = "none";
+            //  document.getElementById("Div4").style.display = "none";
           } else {
             document.getElementById("Div1").style.display = "none";
-            document.getElementById("Button1").remove();
+            //document.getElementById("Button1").remove();
             displayList();
-            //setTimeout
+            // timer();
+            timerId = setInterval(timer, 1000);
           }
         }
       }
+      function goBack() {
+        /* document.getElementById("Div1").style.display = "block";
+        document.getElementById("Div4").style.display = "none";*/
+        location.reload();
+      }
+
+      function timer() {
+        /* setInterval(function () {
+          if (timeleft <= 0) {
+            clearInterval(timer());
+            //document.getElementById("countdown").innerHTML = "Finished";
+            userNameScore();
+          } else {
+            document.getElementById("countdown").innerHTML =
+              "Time: " + timeleft;
+          }
+
+          timeleft -= 1;
+        }, 1000);*/
+
+        document.getElementById("countdown").innerHTML = "Time: " + timeleft;
+        timeleft--;
+        if (timeleft <= 0) {
+          clearInterval(timerId);
+          //document.getElementById("countdown").innerHTML = "Finished";
+          userNameScore();
+        }
+      }
+
+      function clearHistory() {
+        localStorage.clear();
+        div4.innerHTML =
+          "<h1 > High Scores</h1><br/>" +
+          "<button onclick='goBack()'>Go Back</button> <button onclick='clearHistory()'> Clear High Scores </button>";
+      }
+
+      function highScores() {
+        document.getElementById("Div3").style.display = "none";
+        document.getElementById("Div4").style.display = "block";
+        var highScores = document.createElement("div");
+        highScores.className = "namesomething";
+        highScores.innerHTML = "<h1 > High Scores</h1>";
+        var listHighScores = document.createElement("p");
+        var buttonsHighScores = document.createElement("div");
+
+        for (var y = 0; y < localStorage.length; y++) {
+          console.log(y);
+          /* listHighScores.innerHTML +=
+            /*   "<p>" +
+            (a + 1) +
+            ". " +
+            localStorage.key(a) +
+            " - " +
+            localStorage.getItem(localStorage.key(a)) +
+            " </p> <br/>";*/
+
+          listHighScores.innerHTML +=
+            "<p>" +
+            (y + 1) +
+            ". " +
+            localStorage.key(y) +
+            " - " +
+            +localStorage.getItem(localStorage.key(y)) +
+            " </p><br/>";
+        }
+        // console.log(localStorage.key(1));
+
+        buttonsHighScores.innerHTML =
+          "<button onclick='goBack()'>Go Back</button> <button onclick='clearHistory()'> Clear High Scores </button>";
+
+        highScores.appendChild(listHighScores);
+        highScores.appendChild(buttonsHighScores);
+
+        div4.appendChild(highScores);
+      }
 
       function setScore() {
+        var initials = document.getElementById("initials").value;
+        localStorage.setItem(initials, answerCount);
+        highScores();
+      }
+
+      function userNameScore() {
         document.getElementById("Div2").style.display = "none";
         document.getElementById("Div3").style.display = "block";
         document.getElementById("Div3").className = "mystyle";
@@ -140,7 +235,7 @@
           "</h1><br/><h2> Your final score is " +
           answerCount +
           "</h2> <br/>" +
-          "<br/><label for='initials'>Enter initials: </label><input type = 'text' id='initials name='initials><input type='submit' value='Submit'><br/> <br/><p>" +
+          "<br/><label for='initials'>Enter initials: </label><input type = 'text' id='initials' name='initials'><input type='submit' value='Submit' onclick='setScore()'><br/> <br/><p>" +
           result +
           "</p>";
 
@@ -148,6 +243,7 @@
       }
 
       function displayList() {
+        console.log("here");
         document.getElementById("Div2").style.display = "block";
         document.getElementById("Div2").className = "mystyle";
         var listItemEl = document.createElement("li");
@@ -221,9 +317,10 @@
           if (userSelected === taskDataObj[i].answer) {
             ++answerCount;
             console.log("score: " + answerCount);
-            result = "correct";
+            result = "Correct!";
           } else {
-            result = "incorrect";
+            result = "Incorrect!";
+            timeleft -= 5;
           }
 
           if (i < taskDataObj.length - 1) {
@@ -232,7 +329,7 @@
             div2.innerHTML = "";
             displayList();
           } else {
-            setScore();
+            userNameScore();
           }
 
           /* console.log("This is i " + i);
@@ -255,7 +352,7 @@
         }
 
         /*else {
-                setScore();
+                userNameScore();
               }*/
 
         /*   if (i >= taskDataObj.length) {
