@@ -8,41 +8,370 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <div class="Div1">
-      <h1>Coding Quiz Challenge</h1>
+    <div id="Div1">
+      <h1>
+        <button onclick=" div1.style.display = 'none'; highScores();">
+          View High Scores
+        </button>
+      </h1>
+      <h1 id="title">Coding Quiz Challenge</h1>
       <p>
-        Try to answer the following code-related questions within the time
-        limit. Keep in mind that incorrect answers will penalize your score/time
-        by ten seconds!
+        PLEASE WAIT FOR TIMER TO START THE GAME THEN START ANSWERING. Try to
+        answer the following code-related questions within the time limit. Keep
+        in mind that incorrect answers will penalize your score/time by ten
+        seconds!
       </p>
       <input
         id="Button1"
         type="button"
-        value="Click"
+        value="Start Quiz"
         onclick="switchVisible();"
       />
     </div>
-    <div class="Div2"></div>
-    <!--<button id="hide">hide</button>
-    <div class="d1 hide">
-      <h1>show this</h1>
+
+    <div id="Div2">
+      <!-- <button onclick="  highScores();">View High Scores</button> -->
+      <div id="countdown"></div>
+      <button id="highScores" onclick="  highScores();">
+        View High Scores
+      </button>
+      <ul id="ulDiv2"></ul>
+
+      <!--<h1>Commonly used data types DO Not Include:</h1>
+      <ul>
+        <button
+          id="Button2"
+          type="button"
+          value="Click"
+          onclick="switchVisible();"
+        >
+          <li>1.Strings</li>
+        </button>
+        <li>2.Booleans</li>
+      </ul> -->
     </div>
-    <div class="d2">
-      <h1>do not show this</h1>
+
+    <div id="Div3"></div>
+
+    <div id="Div4"></div>
+
+    <!--  <div id="Div3">
+      <h1>All Done!</h1>
+      <h2>Your final score is:</h2>
+      <h2>Enter initials</h2>
+      <button onclick="userNameScore">Submit</button>
     </div>
-    <div class="d3 hide">
-      <h1>do not show this</h1>
-    </div>-->
+-->
+
+    <script src="./assets/js/script.js"></script>
     <script>
-      if (document.getElementsByClassName("Div1")) {
-        if (document.getElementsByClassName("Div1").style.display == "none") {
-          document.getElementsByClassName("Div1").style.display = "block";
-          document.getElementsByClassName("Div2").style.display = "none";
-        } else {
-          document.getElementsByClassName("Div1").style.display = "none";
-          document.getElementsByClassName("Div2").style.display = "block";
+      var i = 0;
+      var result = " ";
+      var taskDataObj = [
+        {
+          question: "Commonly used data types DO Not Include: ",
+          choice1: "1.Strings",
+          choice2: "2.Booleans",
+          choice3: "3.Alerts",
+          choice4: "4.Numbers",
+          answer: "3",
+        },
+        {
+          question:
+            "The condition in an if/else statement is enclosed with ______.",
+          choice1: "1.quotes",
+          choice2: "2.curly brackets",
+          choice3: "3.parenthesis",
+          choice4: "4.square brackets",
+          answer: "2",
+        },
+
+        {
+          question: "Arrays in JavaScript can be used to store ",
+          choice1: "1.numbers and strings",
+          choice2: "2.other arrays",
+          choice3: "3.booleans",
+          choice4: "4.all of the above",
+          answer: "4",
+        },
+
+        {
+          question:
+            "String values must be enclosed within _____ when being assigned to variables.",
+          choice1: "1.commas",
+          choice2: "2.curly brackets",
+          choice3: "3.quotes",
+          choice4: "4.parenthesis",
+          answer: "3",
+        },
+        {
+          question:
+            "A very useful tool used during development and debugging for printing content to the debugger is:",
+          choice1: "1.JavaScript",
+          choice2: "2.terminal/bash",
+          choice3: "3.for loops",
+          choice4: "4.console.log",
+          answer: "4",
+        },
+      ];
+      var div1 = document.querySelector("#Div1");
+      var div2 = document.querySelector("#ulDiv2");
+      var div3 = document.querySelector("#Div3");
+      var div4 = document.querySelector("#Div4");
+      var timeleft = 75;
+      var timerId;
+
+      // var butt = document.querySelector("div2.inside1");
+
+      /* var taskDataObj = {
+                                question: taskNameInput,
+                                choice1: taskTypeInput,
+                                choice2: ,
+                                choice3: ,
+                                choice4: ,
+                                choice5: ,
+                                answer: "to do",
+                              };*/
+
+      function switchVisible() {
+        if (document.getElementById("Div1")) {
+          if (document.getElementById("Div1").style.display == "none") {
+            document.getElementById("Div1").style.display = "block";
+            document.getElementById("Div2").style.display = "none";
+
+            //  document.getElementById("Div4").style.display = "none";
+          } else {
+            document.getElementById("Div1").style.display = "none";
+            //document.getElementById("Button1").remove();
+            displayList();
+            // timer();
+            timerId = setInterval(timer, 1000);
+          }
         }
       }
+      function goBack() {
+        /* document.getElementById("Div1").style.display = "block";
+        document.getElementById("Div4").style.display = "none";*/
+        location.reload();
+      }
+
+      function timer() {
+        /* setInterval(function () {
+          if (timeleft <= 0) {
+            clearInterval(timer());
+            //document.getElementById("countdown").innerHTML = "Finished";
+            userNameScore();
+          } else {
+            document.getElementById("countdown").innerHTML =
+              "Time: " + timeleft;
+          }
+
+          timeleft -= 1;
+        }, 1000);*/
+
+        document.getElementById("countdown").innerHTML = "Time: " + timeleft;
+        timeleft--;
+        if (i === 4 && timeleft <= 0) {
+          clearInterval(timerId);
+        }
+        if (timeleft <= 0) {
+          clearInterval(timerId);
+          //document.getElementById("countdown").innerHTML = "Finished";
+          userNameScore();
+          console.log("Inside TIMER");
+        }
+      }
+
+      function clearHistory() {
+        localStorage.clear();
+        div4.innerHTML =
+          "<h1 > High Scores</h1><br/>" +
+          "<button onclick='goBack()'>Go Back</button> <button onclick='clearHistory()'> Clear High Scores </button>";
+      }
+
+      function highScores() {
+        document.getElementById("Div3").style.display = "none";
+        document.getElementById("Div4").style.display = "block";
+        var highScores = document.createElement("div");
+        highScores.className = "namesomething";
+        highScores.innerHTML = "<h1 > High Scores</h1>";
+        var listHighScores = document.createElement("p");
+        var buttonsHighScores = document.createElement("div");
+
+        for (var y = 0; y < localStorage.length; y++) {
+          console.log(y);
+          /* listHighScores.innerHTML +=
+            /*   "<p>" +
+            (a + 1) +
+            ". " +
+            localStorage.key(a) +
+            " - " +
+            localStorage.getItem(localStorage.key(a)) +
+            " </p> <br/>";*/
+
+          listHighScores.innerHTML +=
+            "<p>" +
+            (y + 1) +
+            ". " +
+            localStorage.key(y) +
+            " - " +
+            +localStorage.getItem(localStorage.key(y)) +
+            " </p><br/>";
+        }
+        // console.log(localStorage.key(1));
+
+        buttonsHighScores.innerHTML =
+          "<button onclick='goBack()'>Go Back</button> <button onclick='clearHistory()'> Clear High Scores </button>";
+
+        highScores.appendChild(listHighScores);
+        highScores.appendChild(buttonsHighScores);
+
+        div4.appendChild(highScores);
+      }
+
+      function setScore() {
+        var initials = document.getElementById("initials").value;
+        localStorage.setItem(initials, answerCount);
+        highScores();
+      }
+
+      function userNameScore() {
+        clearInterval(timerId);
+        document.getElementById("Div2").style.display = "none";
+        document.getElementById("Div3").style.display = "block";
+        document.getElementById("Div3").className = "mystyle";
+        var userInit = document.createElement("div");
+        userInit.className = "userNameScore";
+        userInit.innerHTML =
+          "<button id='highScores1' onclick='highScores()'>  View High Scores</button><br/>" +
+          "<h1 > All Done!" +
+          "</h1><br/><h2> Your final score is " +
+          answerCount +
+          "</h2> <br/>" +
+          "<br/><label for='initials'>Enter initials: </label><input type = 'text' id='initials' name='initials'><input type='submit' value='Submit' onclick='setScore()'><br/> <br/><p>" +
+          result +
+          "</p>";
+
+        div3.appendChild(userInit);
+      }
+
+      function displayList() {
+        console.log("here");
+        document.getElementById("Div2").style.display = "block";
+        document.getElementById("Div2").className = "mystyle";
+        var listItemEl = document.createElement("li");
+        listItemEl.className = "question";
+        listItemEl.setAttribute = ("id", "li1");
+
+        var inside1 = document.createElement("div");
+        inside1.className = "inside1";
+        // for (i = 0; i < taskDataObj.length; ) {
+        // add HTML content to div
+        console.log("This is last i " + i);
+        inside1.innerHTML =
+          "<h1 >" +
+          taskDataObj[i].question +
+          "</h1><button><li id=1>" +
+          taskDataObj[i].choice1 +
+          "</li> </button><br/>" +
+          "<br/><button ><li id=2>" +
+          taskDataObj[i].choice2 +
+          "<br/></li> </button> <br/>" +
+          "<br/><button><li id=3>" +
+          taskDataObj[i].choice3 +
+          "<br/></li> </button><br/>" +
+          "<br/><button><li id=4>" +
+          taskDataObj[i].choice4 +
+          "<br/></li> </button><br/><p>" +
+          result +
+          "</p>";
+
+        listItemEl.appendChild(inside1);
+        div2.appendChild(listItemEl);
+        result = " ";
+        // }
+        /*
+                    var para = document.createElement("h1");
+                    para.innerHTML
+                    var t = document.createTextNode(taskDataObj[0].question);
+                    para.appendChild(t);
+                    document.getElementById("li1").appendChild(para);*/
+
+        // listItemEl.innerHTML = "<h1 >" + taskDataObj.question + "</h1>";
+        //listItemEl.appendChild(#Div2);
+        /* // create div to hold task info and add to list item
+                    var taskInfoEl = document.createElement("div");
+                    // give it a class name
+                    taskInfoEl.className = "my-style";
+                    // add HTML content to div
+                    taskInfoEl.innerHTML = "<h1 >" + taskDataObj.question + "</h1>";
+
+                    listIte
+                  mEl.appendChild(taskInfoEl);*/
+      }
+
+      // function playerScore() {}
+
+      var answerCount = 0;
+
+      div2.addEventListener("click", function (e) {
+        console.log("I IS: " + i);
+        // console.log(e.target.nodeName);
+
+        if (
+          (e.target && e.target.nodeName == "LI") ||
+          (e.target && e.target.nodeName == "BUTTON" && i < taskDataObj.length)
+        ) {
+          console.log(e.target.id + " was clicked");
+          var userSelected = e.target.id;
+          console.log("user selected " + userSelected);
+          console.log("array answer " + taskDataObj[i].answer);
+          // if (i < taskDataObj.length - 1) {
+          if (userSelected === taskDataObj[i].answer) {
+            ++answerCount;
+            console.log("score: " + answerCount);
+            result = "Correct!";
+          } else {
+            result = "Incorrect!";
+            timeleft -= 10;
+          }
+
+          if (i < taskDataObj.length - 1) {
+            i++;
+            console.log("This is i " + i);
+            div2.innerHTML = "";
+            displayList();
+          } else {
+            userNameScore();
+          }
+
+          /* console.log("This is i " + i);
+                div2.innerHTML = "";
+                displayList();
+      */
+          // document.getElementById("li1").style.display = "none";
+          // document.getElementById("Div2").style.display = "none";
+          /*  for (var j = 0; j < taskDataObj.length; j++) {
+                          if (userSelected === taskDataObj[i].answer) {
+                        answerCount++;
+                        console.log(answerCount);
+                        i++;}
+                          div2.innerHTML = "";
+                          displayList();
+                        }
+
+                        */
+          // }
+        }
+
+        /*else {
+                userNameScore();
+              }*/
+
+        /*   if (i >= taskDataObj.length) {
+                      console.log("done");
+                    }*/
+      });
     </script>
   </body>
 </html>
